@@ -10,7 +10,7 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 # python -m streamlit run app.py
 # this will open a network url where edits can be seen in real time on save and refresh
 
-# download corpus' used by app and cashe
+# download corpora used by app and cashe
 fn_downloads()
 
 # title
