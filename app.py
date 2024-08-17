@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import re
 from nltk import Text
-from utils import fn_text_clean, fn_get_pdf_text, fn_highlight_selected_text, fn_downloads, fn_convert_df
+import utils
 from nltk.tokenize import word_tokenize, sent_tokenize
 
 # in terminal of working directory:
@@ -11,7 +11,7 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 # this will open a network url where edits can be seen in real time on save and refresh
 
 # download corpora used by app and cashe
-fn_downloads()
+utils.fn_downloads()
 
 # title
 st.header("PDF Text Explorer Tool")
@@ -24,7 +24,7 @@ if uploaded_file is not None:
     # read file as string
     data_load_state = st.text("Loading data...")
     try:
-        text = fn_get_pdf_text(f"pdf-docs/{uploaded_file.name}")
+        text = utils.fn_get_pdf_text(f"pdf-docs/{uploaded_file.name}")
     except Exception as e:
         st.error(f"""
                  {e}. Upload a file from your 'pdf-docs' sub-directory.
@@ -48,7 +48,7 @@ if uploaded_file is not None:
     #   convert to lower, remove line breaks, normalise whitespace,
     #   remove non-ascii characters, remove hyperlinks
     #   remove leading/trailing whitespace
-    text_light_cleaning = fn_text_clean(text)
+    text_light_cleaning = utils.fn_text_clean(text)
 
     # get number of words and sentences in document
     num_words = len(word_tokenize(text_light_cleaning))
@@ -111,7 +111,7 @@ if uploaded_file is not None:
     elif processing_type == "Word Net Lemmatizer":
         method = "L"
 
-    text_cleaned = fn_text_clean(text,
+    text_cleaned = utils.fn_text_clean(text,
                                  method=method,
                                  rm_punc=rm_punc,
                                  rm_digits=rm_digits,
@@ -124,7 +124,7 @@ if uploaded_file is not None:
 
     st.markdown("""
                 Input a word or term and press enter to see matches reflected in the table below. 
-                For example, `'Contribution'`, `'pensions regulator'`, `'scheme'`...
+                For example, `Contribution`, `pensions regulator`, `scheme`...
                 """)
 
     col4, col5, col6 = st.columns(3)
@@ -158,7 +158,7 @@ if uploaded_file is not None:
         })
         # create a column to add html to table
         concordance_df["Matching text"] = concordance_df.apply(
-            fn_highlight_selected_text,
+            utils.fn_highlight_selected_text,
             origin_col= "Matching string",
             term= term,
             axis=1)
@@ -203,12 +203,12 @@ if uploaded_file is not None:
 
         st.dataframe(display_summary_df, use_container_width=True)
 
-        csv = fn_convert_df(display_summary_df)
+        csv = utils.fn_convert_df(display_summary_df)
 
         st.download_button(
             label="Download data as CSV",
             data=csv,
-            file_name=f"{uploaded_file.name[:20]}..._summary.csv",
+            file_name=f"summary-{uploaded_file.name[:20]}....csv",
             mime="text/csv")
 
 #TODO Loading in a file from any location on machine
