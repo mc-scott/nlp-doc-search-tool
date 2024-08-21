@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import re
 from nltk import Text
+from io import StringIO
 import utils
 from nltk.tokenize import word_tokenize, sent_tokenize
 
@@ -21,12 +22,19 @@ uploaded_file = st.file_uploader("Choose a PDF file to explore", type="pdf",
 
 if uploaded_file is not None:
 
+    bytes_data = uploaded_file.getvalue()
+
+    st.write(bytes_data)
+
+    stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+
+    st.write(stringio)
+
     # read file as string
     data_load_state = st.text("Loading data...")
-    st.text(f".name: {uploaded_file.name}")
-    st.text(f".read(): {uploaded_file.read().decode("utf-8")}")
+
     try:
-        text = utils.fn_get_pdf_text(uploaded_file.read())
+        text = utils.fn_get_pdf_text(stringio.read())
     except Exception as e:
         st.error(f"""
                  {e}. Upload a file from your 'pdf-docs' sub-directory.
