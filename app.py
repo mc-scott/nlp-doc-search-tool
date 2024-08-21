@@ -19,8 +19,6 @@ st.header("PDF Text Explorer Tool")
 uploaded_file = st.file_uploader("Choose a PDF file to explore", type="pdf",
                                  help= "Upload a PDF document from your 'pdf-docs' directory.")
 
-st.text(f".getvalue(): {uploaded_file.getvalue()}")
-
 st.text(f".read(): {uploaded_file.read()}")
 
 st.text(f".read().decode('utf-8'): {uploaded_file.read().decode("utf-8")}")
