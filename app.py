@@ -19,14 +19,12 @@ st.header("PDF Text Explorer Tool")
 uploaded_file = st.file_uploader("Choose a PDF file to explore", type="pdf",
                                  help= "Upload a PDF document from your 'pdf-docs' directory.")
 
-st.text(f".read(): {uploaded_file.read()}")
-
-st.text(f".read().decode('utf-8'): {uploaded_file.read().decode("utf-8")}")
-
 if uploaded_file is not None:
 
     # read file as string
     data_load_state = st.text("Loading data...")
+    st.text(f".read(): {uploaded_file.name}")
+    st.text(f".read().decode('utf-8'): {uploaded_file.read().decode("utf-8")}")
     try:
         text = utils.fn_get_pdf_text(uploaded_file.read().decode("utf-8"))
     except Exception as e:
