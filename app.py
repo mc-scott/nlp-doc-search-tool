@@ -24,7 +24,7 @@ if uploaded_file is not None:
 
     bytes_data = uploaded_file.getvalue()
 
-    stringio = StringIO(bytes_data.decode("utf-8"))
+    stringio = StringIO(bytes_data.decode("latin-1"))
 
     st.write(stringio)
 
