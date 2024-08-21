@@ -26,7 +26,7 @@ def fn_get_pdf_text(filepath:str) -> str:
     """
     Extract text from PDF files
     """
-    assert isinstance(filepath, str), "ERROR: filepath must be a string."
+    # assert isinstance(filepath, str), "ERROR: filepath must be a string."
 
     output = ""
     try:
