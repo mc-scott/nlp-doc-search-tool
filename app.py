@@ -23,7 +23,8 @@ if uploaded_file is not None:
 
     # read file as string
     data_load_state = st.text("Loading data...")
-
+    st.text(f".name: {uploaded_file.name}")
+    st.text(f".read(): {uploaded_file.read()}")
     try:
         text = utils.fn_get_pdf_text(uploaded_file.read())
     except Exception as e:
