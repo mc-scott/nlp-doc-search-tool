@@ -14,7 +14,7 @@ def fn_downloads():
     """
     Download corpora used in app and cashe results
     """
-    nltk.download("punkt")
+    nltk.download('punkt')
     nltk.download('wordnet')
     nltk.download('stopwords')
 # end
@@ -52,39 +52,39 @@ def fn_text_clean(text: str,
 
     assert method is None or method == "S" or method == "L", "ERROR: Method must be None, 'S', or 'L'."
 
-    text = re.sub(r'\n',' ',text)   #remove line breaks
-    text = text.lower() #convert to lowercase
-    text = re.sub(r'[^\x00-\x7f]', r'', text)   #remove non-ascii
-    text = re.sub(r'https?:\/\/.*[\r\n]*', '', text)   #remove hyperlinks
-    text = re.sub(r'\s+', ' ', text) #normalise white space
-    text = text.strip() #remove leading/trailing white spaces
+    text = re.sub(r'\n',' ',text)   # remove line breaks
+    text = text.lower() # convert to lowercase
+    text = re.sub(r'[^\x00-\x7f]', r'', text)   # remove non-ascii
+    text = re.sub(r'https?:\/\/.*[\r\n]*', '', text)   # remove hyperlinks
+    text = re.sub(r'\s+', ' ', text) # normalise white space
+    text = text.strip() # remove leading/trailing white spaces
 
-    #remove punctuation
+    # remove punctuation
     if rm_punc:
         text = re.sub(r'[^\w\s]', '', text)
 
-    #remove stop words
+    # remove stop words
     if rm_stopwords:
         filtered_tokens = [word for word in word_tokenize(text) if not word in set(stopwords.words('english'))]
         text = " ".join(filtered_tokens)
 
-    #additional pre-processing: remove digits/currencies
+    # additional pre-processing: remove digits/currencies
     if rm_digits:
         text = re.sub(r"\d+","",text)
         text = re.sub(r'[\$\d+\d+\$]', "", text)
 
-    #remove dates
+    # remove dates
     if rm_dates:
         text = re.sub(r'\d+[\.\/-]\d+[\.\/-]\d+', '', text)
 
-    #lemmatisation: typically preferred over stemming
+    # lemmatisation: typically preferred over stemming, reduce word variants to their base form
     if method == 'L':
         lemmer = WordNetLemmatizer()
         lemm_tokens = [lemmer.lemmatize(word) for word in word_tokenize(text)]
         text = " ".join(lemm_tokens)
         return text
 
-    #stemming
+    # stemming: reduce inflected words to their common root
     if method == 'S':
         porter = PorterStemmer()
         stem_tokens = [porter.stem(word) for word in word_tokenize(text)]
