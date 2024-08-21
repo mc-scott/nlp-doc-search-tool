@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import re
 from nltk import Text
-from io import StringIO
+from io import BytesIO
 import utils
 from nltk.tokenize import word_tokenize, sent_tokenize
 
@@ -24,13 +24,13 @@ if uploaded_file is not None:
 
     bytes_data = uploaded_file.getvalue()
 
-    stringio = StringIO(bytes_data.decode("latin-1"))
+    pdf_data = BytesIO(bytes_data)
 
     # read file as string
     data_load_state = st.text("Loading data...")
 
     try:
-        text = utils.fn_get_pdf_text(uploaded_file.read())
+        text = utils.fn_get_pdf_text(pdf_data)
     except Exception as e:
         st.error(f"""
                  {e}. Upload a file from your 'pdf-docs' sub-directory.
