@@ -26,13 +26,11 @@ if uploaded_file is not None:
 
     stringio = StringIO(bytes_data.decode("latin-1"))
 
-    st.write(stringio)
-
     # read file as string
     data_load_state = st.text("Loading data...")
 
     try:
-        text = utils.fn_get_pdf_text(stringio.read())
+        text = utils.fn_get_pdf_text(uploaded_file)
     except Exception as e:
         st.error(f"""
                  {e}. Upload a file from your 'pdf-docs' sub-directory.

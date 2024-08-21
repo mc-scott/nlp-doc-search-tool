@@ -29,9 +29,10 @@ def fn_get_pdf_text(filepath:str) -> str:
     assert isinstance(filepath, str), "ERROR: filepath must be a string."
 
     output = ""
-    pdf_reader = PdfReader(filepath)
-    for page in pdf_reader.pages:
-        output += page.extract_text()
+    with open(filepath, "rb") as f:
+        pdf_reader = PdfReader(f)
+        for page in pdf_reader.pages:
+            output += page.extract_text()
 
     return output
 # end
