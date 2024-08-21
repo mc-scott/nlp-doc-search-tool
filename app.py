@@ -24,7 +24,7 @@ if uploaded_file is not None:
     # read file as string
     data_load_state = st.text("Loading data...")
     try:
-        text = utils.fn_get_pdf_text(uploaded_file.name)
+        text = utils.fn_get_pdf_text(uploaded_file.read())
     except Exception as e:
         st.error(f"""
                  {e}. Upload a file from your 'pdf-docs' sub-directory.
