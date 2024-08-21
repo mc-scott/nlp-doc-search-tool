@@ -22,14 +22,12 @@ def fn_downloads():
 # functions:
 
 @st.cache_data
-def fn_get_pdf_text(filepath:str) -> str:
+def fn_get_pdf_text(file_object) -> str:
     """
     Extract text from PDF files
     """
-    # assert isinstance(filepath, str), "ERROR: filepath must be a string."
-
     output = ""
-    pdf_reader = PdfReader(filepath)
+    pdf_reader = PdfReader(file_object)
     for page in pdf_reader.pages:
         output += page.extract_text()
 

@@ -22,19 +22,16 @@ uploaded_file = st.file_uploader("Choose a PDF file to explore", type="pdf",
 
 if uploaded_file is not None:
 
-    bytes_data = uploaded_file.getvalue()
-
-    pdf_data = BytesIO(bytes_data)
-
-    # read file as string
     data_load_state = st.text("Loading data...")
+
+    # convert bytes to file-like object to be read
+    pdf_data = BytesIO(uploaded_file.getvalue())
 
     try:
         text = utils.fn_get_pdf_text(pdf_data)
     except Exception as e:
         st.error(f"""
-                 {e}. Upload a file from your 'pdf-docs' sub-directory.
-                 If this error persists, try uploading a different PDF. File
+                 {e}. If this error persists, try uploading a different PDF. File
                  size is limited to 200MB. 
                  """)
         st.stop()
