@@ -30,10 +30,9 @@ def fn_get_pdf_text(filepath:str) -> str:
 
     output = ""
     try:
-        with open(filepath, "rb") as f:
-            pdf_reader = PdfReader(f)
-            for page in pdf_reader.pages:
-                output += page.extract_text()
+        pdf_reader = PdfReader(filepath)
+        for page in pdf_reader.pages:
+            output += page.extract_text()
     except Exception as e:
         print(f"ERROR: {e}")
 
