@@ -214,5 +214,3 @@ if uploaded_file is not None:
             file_name=f"summary-{uploaded_file.name[:20]}....csv",
             mime="text/csv")
 
-#TODO Loading in a file from any location on machine
-#TODO word n-grams visual with interaction widgets
